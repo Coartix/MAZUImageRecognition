@@ -1,0 +1,9 @@
+{
+	"name": "ProjectDataFactoryMAZU",
+	"location": "westeurope",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "a1640dfd-76e9-4a98-ac70-24435f2fd4fa",
+		"tenantId": "3534b3d7-316c-4bc9-9ede-605c860f49d2"
+	}
+}
