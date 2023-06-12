@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './App.css';
+import Button from '@mui/material/Button';
+import Fab from '@mui/material/Fab';
+import AddIcon from '@mui/icons-material/Add';
 
 const App: React.FC = () => {
   const [imageUrls, setImageUrls] = useState<string[]>([]);
@@ -60,28 +63,58 @@ const App: React.FC = () => {
 
   return (
     <div className='App'>
-      <div className="Images">
-        <div>
-          <input type="file" accept="image/*" onChange={handleImageUpload} multiple />
+      <div className='Upload'>
+        <div className='Input'>
+          <input type="file" accept="image/*" onChange={handleImageUpload} multiple style={{ display: 'none' }} id="select-image" />
+          <label htmlFor="select-image">
+            <Fab
+              color="secondary"
+              size="small"
+              component="span"
+              aria-label="add"
+              variant="extended"
+            >
+              <AddIcon /> Upload photo
+            </Fab>
+          </label>
         </div>
-        <div>
+        <div className='Images'>
           {imageUrls.map((url, index) => (
             // eslint-disable-next-line
-            <img key={index} src={url} alt={`Image ${index}`} />
+            <img key={index} src={url} alt={`Image ${index}`} className='Image' />
           ))}
         </div>
       </div>
-      <div className='Button'>
-        <button onClick={handlePostRequest} disabled={imageUrls.length === 0}>
-          Send POST Request
-        </button>
-      </div>
-      <div className='Prediction'>
-        <div>
-          {currentImageUrl !== '' && <img src={currentImageUrl} alt="Current" />}
+      <div className='Buttons'>
+        <div className='Column'>
+          <div className='Button'>
+            <Button variant="contained" onClick={handlePostRequest} disabled={imageUrls.length === 0}>
+              Send request to Custom Vision
+            </Button>
+          </div>
+          <div className='Prediction'>
+            <div>
+              {currentImageUrl !== '' && <img src={currentImageUrl} alt="Current" className='Image' />}
+            </div>
+            <div>
+              {prediction}
+            </div>
+          </div>
         </div>
-        <div>
-          {prediction}
+        <div className='Column'>
+          <div className='Button'>
+            <Button variant="contained" onClick={handlePostRequest} disabled={imageUrls.length === 0}>
+              Send request to Azure Machine Learning
+            </Button>
+          </div>
+          <div className='Prediction'>
+            <div>
+              {currentImageUrl !== '' && <img src={currentImageUrl} alt="Current" className='Image' />}
+            </div>
+            <div>
+              {prediction}
+            </div>
+          </div>
         </div>
       </div>
     </div>
