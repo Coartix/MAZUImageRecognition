@@ -3,6 +3,7 @@ import json
 
 # Imports for the REST API
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 
 # Imports for image procesing
 from PIL import Image
@@ -11,6 +12,7 @@ from PIL import Image
 from predict import initialize, predict_image, predict_url
 
 app = Flask(__name__)
+CORS(app)
 
 # 4MB Max image size limit
 app.config['MAX_CONTENT_LENGTH'] = 4 * 1024 * 1024
