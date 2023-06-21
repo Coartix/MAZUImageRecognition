@@ -1,5 +1,6 @@
 import io
 import json
+import requests
 
 # Imports for the REST API
 from flask import Flask, request, jsonify
@@ -70,6 +71,26 @@ def predict_url_handler(project=None, publishedName=None):
     except Exception as e:
         print('EXCEPTION:', str(e))
         return 'Error processing image'
+
+
+@app.route('/make-external-request', methods=['POST'])
+def make_external_request():
+    url = 'http://d74a7591-5954-4aaf-8624-13e38c7f0304.westeurope.azurecontainer.io/score'
+    headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer 1ccaKPtU1D9Bk2wKWQLqoVvjQs8fyEjQ'
+    }
+
+    # Get the request data from the React application
+    data = request.get_json()
+
+    try:
+        response = requests.post(url, json=data, headers=headers)
+        response_data = response.json()
+        return jsonify(response_data)
+    except Exception as e:
+        print('Error:', str(e))
+        return jsonify(error='Internal server error'), 500
 
 
 if __name__ == '__main__':
